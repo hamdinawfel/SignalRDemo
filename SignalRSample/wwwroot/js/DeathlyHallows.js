@@ -16,7 +16,7 @@ connectionDeathlyHallows.on("updateDeathlyHallowsCount", (cloak, stone, wand) =>
 
 // start connection
 function fulfilled() {
-    console.log("Connection to User Hub Successful");
+    console.log("Connection to DeathlyHallowsHub Successful");
     connectionDeathlyHallows.invoke("GetDeathlyHallowsStatus").then((raceCount) => { 
         cloakCounterSpan.innerText = raceCount.cloak.toString();
         stoneCounterSpan.innerText = raceCount.stone.toString();
@@ -25,7 +25,7 @@ function fulfilled() {
 )}
 
 function rejected() {
-    console.log("Connection to User Hub failed");
+    console.log("Connection to DeathlyHallowsHub failed");
 
 }
 connectionDeathlyHallows.start().then(fulfilled, rejected);
