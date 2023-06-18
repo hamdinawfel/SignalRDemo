@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SignalRSample.Data;
 using SignalRSample.Hubs;
@@ -43,5 +44,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapHub<UserHub>("hubs/userCount");
+app.MapHub<DeathlyHallowsHub>("hubs/DeathlyHallows");
 
 app.Run();

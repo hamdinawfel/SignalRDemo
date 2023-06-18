@@ -1,19 +1,22 @@
 ﻿// create a connection
-var connectioUserCount = new signalR.HubConnectionBuilder().withUrl("hubs/userCount").build();
+var connectionUserCount = new signalR.HubConnectionBuilder()
+    .withUrl("hubs/userCount", signalR.HttpTransportType.WebSockets)
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
 // connect to method that hub invokes aka receive notification from hub
-connectioUserCount.on("updateTotalViews", (value) => {
+connectionUserCount.on("updateTotalViews", (value) => {
     var viewsCountSpan = document.getElementById("totalViewsCounter");
     viewsCountSpan.innerText = value.toString();
 });
 
-connectioUserCount.on("updateTotalUsers", (value) => {
+connectionUserCount.on("updateTotalUsers", (value) => {
     var usersCountSpan = document.getElementById("totalUsersCounter");
     usersCountSpan.innerText = value.toString();
 });
 // invoke hub methods aka send notification to hub
 function newWindowsLoadedInClient() {
-   connectioUserCount.send("NewWindowLoaded");
+    connectionUserCount.invoke("NewWindowLoaded", "Nawfel").then((value) => console.log(value));
 }
 
 
@@ -26,4 +29,4 @@ function rejected() {
     console.log("Connection to User Hub failed");
 
 }
-connectioUserCount.start().then(fulfilled, rejected);
+connectionUserCount.start().then(fulfilled, rejected);
