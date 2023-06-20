@@ -68,7 +68,7 @@ function updateSubscribedListUi() {
 connectionHouse.on("onSubscribe", (houseName) => {
     subscribedList.push(houseName);
     toastr.success('You are successfully subscribed to ' + houseName);
-
+    
     switch (houseName) {
         case 'Gryffindor':
             gryffindorSubsBtn.style.display = "none";
@@ -130,6 +130,41 @@ connectionHouse.on("onUnsubscribe", (houseName) => {
     updateSubscribedListUi();
 });
 
+connectionHouse.on("newMemberAddedInHouse", (houseName) => {
+    toastr.success('Member has subscrbed to :' + houseName);
+    console.log("test")
+})
+
+connectionHouse.on("memberRemovedFromHouse", (houseName) => {
+    toastr.warning('Member has unsubscrbed from :' + houseName);
+})
+
+let trigger_gryffindor = document.getElementById("trigger_gryffindor");
+let trigger_slytherin = document.getElementById("trigger_slytherin");
+let trigger_hufflepuff = document.getElementById("trigger_hufflepuff");
+let trigger_ravenclaw = document.getElementById("trigger_ravenclaw");
+
+
+trigger_gryffindor.addEventListener("click", function (event) {
+    event.preventDefault();
+    connectionHouse.send("TriggerNotification", "Gryffindor");
+});
+trigger_slytherin.addEventListener("click", function (event) {
+    event.preventDefault();
+    connectionHouse.send("TriggerNotification", "Slytherin");
+});
+trigger_hufflepuff.addEventListener("click", function (event) {
+    event.preventDefault();
+    connectionHouse.send("TriggerNotification", "Hufflepuff");
+});
+trigger_ravenclaw.addEventListener("click", function (event) {
+    event.preventDefault();
+    connectionHouse.send("TriggerNotification", "Ravenclaw");
+});
+
+connectionHouse.on("onTriggerNotification", (houseName) => {
+    toastr.success('a new Member has subscrbed to :' + houseName);
+})
 // start connection
 function fulfilled() {
     console.log("Connection to HouseGroupHub Successful");

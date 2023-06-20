@@ -14,6 +14,7 @@ namespace SignalRSample.Hubs
                GroupsJoined.Add(houseConnectionkey);
                await Groups.AddToGroupAsync(Context.ConnectionId, houseName);
                await Clients.Caller.SendAsync("onSubscribe", houseName);
+               await Clients.Others.SendAsync("newMemberAddedInHouse", houseName);
             }
         }
 
@@ -25,7 +26,13 @@ namespace SignalRSample.Hubs
                 GroupsJoined.Remove(houseConnectionkey);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, houseName);
                 await Clients.Caller.SendAsync("onUnsubscribe", houseName);
+                await Clients.Others.SendAsync("memberRemovedFromHouse", houseName);
             }
+        }
+        
+        public async Task TriggerNotification(string houseName)
+        {
+             await Clients.OthersInGroup(houseName).SendAsync("onTriggerNotification", houseName);
         }
     }
 }
