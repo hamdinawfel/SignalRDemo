@@ -1,5 +1,6 @@
 ﻿// create a connection
 var connectionUserCount = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect()
     .withUrl("/hubs/usercount", signalR.HttpTransportType.WebSockets)
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -29,4 +30,18 @@ function rejected() {
     console.log("Connection to User Hub failed");
 
 }
+
+connectionUserCount.onclose(function (error) {
+    document.body.style.backgroundColor = "red";
+});
+
+connectionUserCount.onreconnected(function (connectionId) {
+    document.body.style.backgroundColor = "green";
+});
+
+connectionUserCount.onreconnecting(function (error) {
+    document.body.style.backgroundColor = "orange";
+});
+
+
 connectionUserCount.start().then(fulfilled, rejected);
