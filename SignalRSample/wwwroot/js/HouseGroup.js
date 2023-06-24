@@ -1,7 +1,7 @@
 ﻿
 // create connection
 var connectionHouse = new signalR.HubConnectionBuilder()
-    .withUrl("hubs/houseGroupHub", signalR.HttpTransportType.WebSockets)
+    .withUrl("/hubs/housegroup", signalR.HttpTransportType.WebSockets)
     .build();
 
 var subscribedListUi = document.getElementById("lbl_houseJoined")
@@ -164,14 +164,15 @@ trigger_ravenclaw.addEventListener("click", function (event) {
 
 connectionHouse.on("onTriggerNotification", (houseName) => {
     toastr.success('a new Member has subscrbed to :' + houseName);
+    console.log("trigger notif")
 })
 // start connection
 function fulfilled() {
-    console.log("Connection to HouseGroupHub Successful");
+    console.log("Connection to House Group Hub Successful");
 }
 
 function rejected() {
-    console.log("Connection to HouseGroupHub failed");
+    console.log("Connection to House Group Hub failed");
 
 }
 connectionHouse.start().then(fulfilled, rejected);

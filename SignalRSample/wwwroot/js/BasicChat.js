@@ -1,6 +1,6 @@
 ﻿// create a connection
 var connectionChat = new signalR.HubConnectionBuilder()
-    .withUrl("hubs/chatHub", signalR.HttpTransportType.WebSockets)
+    .withUrl("/hubs/basicchat", signalR.HttpTransportType.WebSockets)
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
@@ -10,7 +10,6 @@ let sendMessageBtn = document.getElementById("sendMessage");
 
 sendMessageBtn.disable = true;
 
-let messagesList = document.getElementById("messagesList");
 
 sendMessageBtn.addEventListener("click", function (event) {
     let message = chatMessageInput.value
@@ -36,10 +35,11 @@ sendMessageBtn.addEventListener("click", function (event) {
 
 
 connectionChat.on("onMessageRecieved", (sender, message) => {
+    let messageList = document.getElementById("messagesList");
     messageList.innerHTML = "";
     let listItem = document.createElement("li");
     listItem.textContent = `${sender} - ${message}`;
-    messagesList.appendChild(listItem);
+    messageList.appendChild(listItem);
     console.log(`${sender} - ${message}`)
 })
 

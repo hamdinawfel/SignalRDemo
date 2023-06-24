@@ -1,6 +1,6 @@
 ﻿// create a connection
 var connectionUserCount = new signalR.HubConnectionBuilder()
-    .withUrl("hubs/userCount", signalR.HttpTransportType.WebSockets)
+    .withUrl("/hubs/usercount", signalR.HttpTransportType.WebSockets)
     .configureLogging(signalR.LogLevel.Information)
     .build();
 

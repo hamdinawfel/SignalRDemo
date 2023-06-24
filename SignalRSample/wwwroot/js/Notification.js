@@ -1,7 +1,7 @@
 ﻿
 // create a connection
 var connectionNotification = new signalR.HubConnectionBuilder()
-    .withUrl("hubs/notificationHub", signalR.HttpTransportType.WebSockets)
+    .withUrl("/hubs/notification", signalR.HttpTransportType.WebSockets)
     .configureLogging(signalR.LogLevel.Information)
     .build();
 

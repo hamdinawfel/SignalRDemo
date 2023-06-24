@@ -51,6 +51,20 @@ namespace SignalRSample.Controllers
             return View();
         }
 
+         public IActionResult BasicChat()
+        {
+            return View();
+        }
+           public IActionResult HouseGroup()
+        {
+            return View();
+        }
+        
+        public IActionResult DeathlyRace()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

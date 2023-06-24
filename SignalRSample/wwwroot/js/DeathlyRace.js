@@ -4,7 +4,7 @@ var wandCounterSpan = document.getElementById("wandCounter");
 
 // create connection
 var connectionDeathlyHallows = new signalR.HubConnectionBuilder()
-    .withUrl("hubs/DeathlyHallows", signalR.HttpTransportType.WebSockets)
+    .withUrl("/hubs/deathlyrace", signalR.HttpTransportType.WebSockets)
     .build();
 
 // Method to be called from the controller
@@ -16,7 +16,7 @@ connectionDeathlyHallows.on("updateDeathlyHallowsCount", (cloak, stone, wand) =>
 
 // start connection
 function fulfilled() {
-    console.log("Connection to DeathlyHallowsHub Successful");
+    console.log("Connection to Deathly Hallows Hub Successful");
     connectionDeathlyHallows.invoke("GetDeathlyHallowsStatus").then((raceCount) => { 
         cloakCounterSpan.innerText = raceCount.cloak.toString();
         stoneCounterSpan.innerText = raceCount.stone.toString();
@@ -25,7 +25,7 @@ function fulfilled() {
 )}
 
 function rejected() {
-    console.log("Connection to DeathlyHallowsHub failed");
+    console.log("Connection to Deathly Hallow sHub failed");
 
 }
 connectionDeathlyHallows.start().then(fulfilled, rejected);
