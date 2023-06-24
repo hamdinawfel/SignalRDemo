@@ -48,7 +48,8 @@ app.MapHub<UserHub>("/hubs/usercount");
 app.MapHub<DeathlyHallowsHub>("/hubs/deathlyrace");
 app.MapHub<HouseGroupHub>("/hubs/housegroup");
 app.MapHub<NotificationHub>("/hubs/notification");
-app.MapHub<ChatHub>("hubs/basicchat");
+app.MapHub<BasicChatHub>("hubs/basicchat");
 app.MapHub<OrderHub>("/hubs/order");
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.Run();

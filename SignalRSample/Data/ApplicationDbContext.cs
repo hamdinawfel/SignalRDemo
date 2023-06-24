@@ -12,5 +12,6 @@ namespace SignalRSample.Data
         }
 
         public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<ChatRoom> ChatRoom { get; set; }
     }
 }
