@@ -1,5 +1,5 @@
 ﻿// create a connection
-var connectionNotification = new signalR.HubConnectionBuilder()
+var connectionOrder = new signalR.HubConnectionBuilder()
     .withUrl("/hubs/order", signalR.HttpTransportType.WebSockets)
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -38,6 +38,11 @@ function loadDataTable() {
     });
 }
 
+connectionOrder.on("onNewOrderMaked", () => {
+    toastr.success('New order is maked Now');
+    console.log("New order is maked Now")
+
+})
 
 // start connection
 function fulfilled() {
@@ -48,4 +53,4 @@ function rejected() {
     console.log("Connection to Order Hub failed");
 
 }
-connectionNotification.start().then(fulfilled, rejected);
+connectionOrder.start().then(fulfilled, rejected);
