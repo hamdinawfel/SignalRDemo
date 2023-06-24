@@ -10,8 +10,8 @@ var connectionChat = new signalR.HubConnectionBuilder()
 let btnCreateRoom = document.getElementById("btnCreateRoom");
 btnCreateRoom.addEventListener("click", function (event) {
     let createRoomName = document.getElementById("createRoomName").value;
-    
-    const apiurl = '/ChatRooms/PostChatRoom'; 
+
+    const apiurl = '/ChatRooms/PostChatRoom';
     const room = {
         name: createRoomName
     };
@@ -41,7 +41,7 @@ btnCreateRoom.addEventListener("click", function (event) {
 function GetRooms() {
     let ddlDelRoom = document.getElementById("ddlDelRoom");
     const apiurl = '/ChatRooms/GetChatRooms';
-   
+
     const options = {
         method: 'GET',
         headers: {
@@ -52,10 +52,10 @@ function GetRooms() {
     fetch(apiurl, options)
         .then(response => response.json())
         .then(data => {
-            
+
             ddlDelRoom.innerHTML = "";
             data.forEach((room) => {
-               let roomOption = document.createElement("option");
+                let roomOption = document.createElement("option");
                 roomOption.textContent = room.name;
                 ddlDelRoom.appendChild(roomOption);
             });
@@ -72,11 +72,32 @@ connectionChat.on("onRoomCreated", () => {
     GetRooms();
 })
 
+let hdUserId = document.getElementById("hdUserId").value;
+
+connectionChat.on("sayHiToNewJoinedUser", (userName) => {
+    if (userName) {
+        let messagesList = document.getElementById("messagesList")
+        let messageItem = document.createElement("li");
+        messageItem.textContent = `Hi ${userName}`;
+        messagesList.appendChild(messageItem);
+    }
+})
+
+connectionChat.on("notifyOthersForJoinedUser", (userName) => {
+    if (userName) {
+        let messagesList = document.getElementById("messagesList")
+        let messageItem = document.createElement("li");
+        messageItem.textContent = `${userName} has joind room`;
+        messagesList.appendChild(messageItem);
+    }
+})
+
 
 // start connection SendEmail
 function fulfilled() {
     console.log("Connection to Chat Hub Successful");
     GetRooms();
+    connectionChat.send("NotifyWhenRoomJoined", hdUserId);
 }
 function rejected() {
     console.log("Connection to Chat Hub failed");

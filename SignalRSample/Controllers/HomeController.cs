@@ -7,6 +7,9 @@ using SignalRSample.Hubs;
 using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
 using SignalRSample.Data;
+using System.Security.Claims;
+using SignalRSample.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SignalRSample.Controllers
 {
@@ -48,10 +51,18 @@ namespace SignalRSample.Controllers
             return Accepted();
         }
 
-
-        public IActionResult Chat()
+        [Authorize]
+        public ActionResult Chat()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rooms =  _context.ChatRoom.ToList();
+            var chatViewModel = new ChatRoomDto
+            {
+                MaxRoomsAllowed = 4,
+                Rooms = rooms,
+                UserId = userId
+            };
+            return View(chatViewModel);
         }
 
         public IActionResult Notification()
