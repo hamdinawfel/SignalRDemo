@@ -27,9 +27,21 @@ connectionNotification.on("onSubmitNotification", (messages, count) => {
     });
 })
 
+connectionNotification.on("onLoadWindow", (messages, count) => {
+    notificationCounterSpan.innerText = count;
+    messageList.innerHTML = "";
+    messages.forEach((message) => {
+        let listItem = document.createElement("li");
+        listItem.textContent = message;
+        messageList.appendChild(listItem);
+    });
+})
+
+
 // start connection
 function fulfilled() {
     console.log("Connection to NotificationHub Successful");
+    connectionNotification.send("LoadWindow")
 }
 
 function rejected() {
