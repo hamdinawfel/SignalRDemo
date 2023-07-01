@@ -19,7 +19,7 @@ namespace SignalRSample.Hubs
             if (!string.IsNullOrEmpty(userId))
             {
                 var userName = _context.Users.FirstOrDefault(u => u.Id == userId).UserName;
-                Clients.Users(HubConnections.OnlineUsers()).SendAsync("onReceiveUserConnected", userId, userName, HubConnections.HasUser(userId));
+                Clients.Users(HubConnections.OnlineUsers()).SendAsync("onReceiveUserConnected", userId, userName);
                 HubConnections.AddUserConnection(userId, Context.ConnectionId);
 
             }
@@ -41,18 +41,18 @@ namespace SignalRSample.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        //public async Task NotifyWhenRoomJoined(string userId)
-        //{
-        //    await Clients.All.SendAsync("sayHiToNewJoinedUser");
+        public async Task NotifyWhenRoomJoined(string userId)
+        {
+            await Clients.All.SendAsync("sayHiToNewJoinedUser");
 
-        //    var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
-        //    if (user != null)
-        //    {
-        //        await Clients.User(user.Id).SendAsync("sayHiToNewJoinedUser", user.UserName);
-        //        await Clients.AllExcept(Context.ConnectionId).SendAsync("notifyOthersForJoinedUser", user.UserName);
-        //        await Clients.Others.SendAsync("notifyOthersForJoinedUser", user.UserName);
-        //    }
-        //}
+            if (user != null)
+            {
+                await Clients.User(user.Id).SendAsync("sayHiToNewJoinedUser", user.UserName);
+                await Clients.AllExcept(Context.ConnectionId).SendAsync("notifyOthersForJoinedUser", user.UserName);
+                await Clients.Others.SendAsync("notifyOthersForJoinedUser", user.UserName);
+            }
+        }
     }
 }
