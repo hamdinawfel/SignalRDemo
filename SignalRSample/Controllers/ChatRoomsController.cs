@@ -67,7 +67,7 @@ namespace SignalRSample.Controllers
           }
             _context.ChatRoom.Add(chatRoom);
             await _context.SaveChangesAsync();
-            await _chatHub.Clients.All.SendAsync("onRoomCreated");
+            await _chatHub.Clients.All.SendAsync("onRoomUpdated");
             return CreatedAtAction("GetChatRoom", new { id = chatRoom.Id }, chatRoom);
         }
 
@@ -88,7 +88,7 @@ namespace SignalRSample.Controllers
 
             _context.ChatRoom.Remove(chatRoom);
             await _context.SaveChangesAsync();
-
+            await _chatHub.Clients.All.SendAsync("onRoomUpdated");
             return NoContent();
         }
     }
