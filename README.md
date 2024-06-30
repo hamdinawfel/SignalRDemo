@@ -2,7 +2,7 @@
 
 This repository is built on top of the Udemy course: Learn SignalR fundamentals by building 8 projects with SignalR in .NET Core and MVC (.NET 7)
 
-Certification link: [View Certificate](https://eylearning.udemy.com/certificate/UC-63239090-12cc-4821-bd9b-920bd52c778e/)
+Certification link: [View Certificate](https://udemy-certificate.s3.amazonaws.com/pdf/UC-63239090-12cc-4821-bd9b-920bd52c778e.pdf)
 
 Screenshot: 
 ![ORDER](https://github.com/hamdinawfel/SignalRSample/assets/47576444/23fa0626-a626-42f2-bf4b-6e3ce9af8f7e)
